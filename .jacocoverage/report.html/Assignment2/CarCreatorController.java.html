@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CarCreatorController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Assignment_2&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Assignment2</a> &gt; <span class="el_source">CarCreatorController.java</span></div><h1>CarCreatorController.java</h1><pre class="source lang-java linenums">/*
+Name:Samarth Patel
+Student Number: 200398207
+*/
+package Assignment2;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
+/**
+ * FXML Controller class
+ *
+ * @author Samarth Patel
+ */
+<span class="nc" id="L39">public class CarCreatorController implements Initializable {</span>
+
+   //This is an instance variable for Manufacturer text field
+    @FXML
+    private TextField manufacturerTextField;
+    
+  /**
+   * This is an Observable list that receive the data from the Object and saves it in addToTableView List
+   */
+<span class="nc" id="L48">    public static ObservableList&lt;Car&gt; addToTableView = FXCollections.observableArrayList();</span>
+    
+    //This an variable for model text field
+    @FXML
+    private TextField modelTextField;
+    
+    //This is an instance variable for manufacturingdate DatePicker 
+    @FXML
+    private DatePicker manufacturingDateDatePicker;
+    
+   //This an instance variable for maximumSpeedSpinner 
+    @FXML 
+    private Spinner maximumSpeedSpinner;
+  
+    //This is an instance variable for Combo Box Object
+    @FXML
+    private ComboBox&lt;String&gt; carTypeComboBox;
+    
+    //This is instance variable for radiobutton example
+    @FXML private RadioButton flatButton;
+    @FXML private RadioButton veeButton;
+    @FXML private RadioButton straightButton;
+    @FXML private RadioButton ERWButton;
+    @FXML private ToggleGroup engineTypeToggleGroup;
+    
+    //This is instance variable imageview example
+    @FXML
+    private ImageView imageView;
+    
+    //This instance variable for buttton of create car
+    @FXML
+    private Button createCarButton;
+    
+     //This instance variable for buttton of changeScreen
+    @FXML
+    private Button changeScreenButton;
+    
+    
+    //this is for heading car creator
+    @FXML
+    private Label carCreator;
+    
+    //This is for error message label
+    @FXML
+    private Label errorMessage;
+      
+    /**
+     * This method will change the image as we change the car type in combo box
+     */
+     public void carImageChanger()
+    {
+<span class="nc" id="L99">        String carty = carTypeComboBox.getValue().toString();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        if (carty.equalsIgnoreCase(&quot;Compact Car&quot;))</span>
+<span class="nc" id="L101">            imageView.setImage(new Image(&quot;./images/Compact.png&quot;));</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        else if (carty.equalsIgnoreCase(&quot;Luxury Car&quot;))</span>
+<span class="nc" id="L103">            imageView.setImage(new Image(&quot;./images/Luxury.png&quot;));</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        else if (carty.equalsIgnoreCase(&quot;Sports Car&quot;))</span>
+<span class="nc" id="L105">            imageView.setImage(new Image(&quot;./images/Sport.png&quot;));</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        else if (carty.equalsIgnoreCase(&quot;SUV&quot;))</span>
+<span class="nc" id="L107">            imageView.setImage(new Image(&quot;./images/SUV.png&quot;));</span>
+        else
+<span class="nc" id="L109">             imageView.setImage(new Image(&quot;./images/Truck.png&quot;));</span>
+<span class="nc" id="L110">    }</span>
+     
+     /**
+      * This method will change the scene when we push the ListOf Cars Button
+      * and the for loop will add the object to the table one after other
+      * @param event
+      * @throws IOException 
+      */
+     public void changeScreenButtonPushed(ActionEvent event) throws IOException
+    {
+<span class="nc" id="L120">         FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L121">        loader.setLocation(getClass().getResource(&quot;CarObjectView.fxml&quot;));</span>
+<span class="nc" id="L122">        Parent listViewParent = loader.load();</span>
+<span class="nc" id="L123">         Scene listViewScene = new Scene(listViewParent);</span>
+        
+<span class="nc" id="L125">         CarObjectViewController controller = loader.getController();</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">         for(int i=0; i&lt;addToTableView.size(); i++)</span>
+<span class="nc" id="L127">             controller.setNewCar(addToTableView.get(i));</span>
+       
+        //This line gets the Stage information
+<span class="nc" id="L130">        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();</span>
+        
+<span class="nc" id="L132">        window.setScene(listViewScene);</span>
+<span class="nc" id="L133">        window.show();</span>
+<span class="nc" id="L134">    }</span>
+        
+    /**
+     * Initializes the controller class.
+     * This will run first when we run the project
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        /**
+         * This will configure spinner object 
+         * The SpinnerValueFactory is the inbuilt model for spinner object 
+         * without this the spinner object is without any use
+         */
+<span class="nc" id="L148">        SpinnerValueFactory&lt;Integer&gt; maxSpeedValue = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,400);</span>
+<span class="nc" id="L149">        this.maximumSpeedSpinner.setValueFactory(maxSpeedValue);</span>
+       // this.maximumSpeedSpinner.setEditable(true);
+       
+        
+        /**
+         * This will configure the combo box object
+         * and adds Compact Car,Luxury Car, Sports Car, SUV, Standard Pickup Truck to it
+         */
+<span class="nc" id="L157">        carTypeComboBox.setPromptText(&quot;Select Type of Car&quot;);</span>
+<span class="nc" id="L158">        carTypeComboBox.getItems().addAll(&quot;Compact Car&quot;,&quot;Luxury Car&quot;,&quot;Sports Car&quot;,&quot;SUV&quot;,&quot;Standard Pickup Truck&quot;);</span>
+        
+        /**
+         *  This will configure the radio button object
+         * the togge group will help us to select one radio button at a time 
+         */
+<span class="nc" id="L164">        engineTypeToggleGroup = new ToggleGroup();</span>
+<span class="nc" id="L165">        this.flatButton.setToggleGroup(engineTypeToggleGroup);</span>
+<span class="nc" id="L166">        this.veeButton.setToggleGroup(engineTypeToggleGroup);</span>
+<span class="nc" id="L167">        this.straightButton.setToggleGroup(engineTypeToggleGroup);</span>
+<span class="nc" id="L168">        this.ERWButton.setToggleGroup(engineTypeToggleGroup);</span>
+        
+     //This is error message label the is setted empty
+<span class="nc" id="L171">        this.errorMessage.setText(&quot;&quot;);</span>
+  
+<span class="nc" id="L173">     }   </span>
+     
+    /**
+     *This method will try to get manufacturer, model, manufacturing date, maximum speed,
+     * car type and create new car object if user enter the manufacturing date first
+     * or it will catch exception and show it in error message label
+     * the new created car object will get added to addToTableView list
+     */
+    @FXML
+    public void createCarButtonPush()
+    {
+<span class="nc bnc" id="L184" title="All 2 branches missed.">        if (this.manufacturingDateDatePicker.getValue() != null)</span>
+        {
+            try{     
+<span class="nc" id="L187">                Car newCar = new Car( </span>
+<span class="nc" id="L188">                                        this.manufacturerTextField.getText(),</span>
+<span class="nc" id="L189">                                        this.modelTextField.getText(),</span>
+<span class="nc" id="L190">                                        this.manufacturingDateDatePicker.getValue(), </span>
+<span class="nc" id="L191">                                         (Integer) maximumSpeedSpinner.getValue(),</span>
+<span class="nc" id="L192">                                        this.carTypeComboBox.getValue());</span>
+               
+<span class="nc" id="L194">                addToTableView.add(newCar);</span>
+                
+                
+<span class="nc" id="L197">               this.errorMessage.setText(&quot;Added To List Of Cars Successfully !&quot;);</span>
+     }
+    
+<span class="nc" id="L200">    catch (IllegalArgumentException e)</span>
+            {
+<span class="nc" id="L202">                this.errorMessage.setText(e.getMessage());</span>
+<span class="nc" id="L203">            }</span>
+        }
+        else
+        {
+<span class="nc" id="L207">            this.errorMessage.setText(&quot;You need to set the Manufacturing Date First&quot;);</span>
+        }
+        
+<span class="nc" id="L210">    }</span>
+    
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
